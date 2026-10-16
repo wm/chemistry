@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Charges, electrons, and static electricity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E9EFF5; --surface:#FFFFFF; --surface2:#F3F6FA; --ink:#142235; --muted:#4E5D70; --line:#C9D4E0;
+  --pos:#C8372D; --neg:#2563C9; --neu:#8A94A3; --skin:#E7C9A9; --hair:#5B3A24; --balloon:#E25A87; --btn:#142235; --btn-ink:#FFFFFF;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1722; --surface:#172231; --surface2:#1D2A3B; --ink:#E6EDF5; --muted:#9AA9BB; --line:#2A3A4E;
+    --pos:#F0675C; --neg:#6EA2F5; --neu:#7D8796; --skin:#C9A486; --hair:#8A5A3A; --balloon:#E86F98; --btn:#E6EDF5; --btn-ink:#0F1722;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1722; --surface:#172231; --surface2:#1D2A3B; --ink:#E6EDF5; --muted:#9AA9BB; --line:#2A3A4E;
+  --pos:#F0675C; --neg:#6EA2F5; --neu:#7D8796; --skin:#C9A486; --hair:#8A5A3A; --balloon:#E86F98; --btn:#E6EDF5; --btn-ink:#0F1722;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:1.0625rem;line-height:1.6}
+h1,h2,h3{font-family:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0 0 1em;max-width:68ch}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+.lede{font-size:1.2rem;color:var(--muted);max-width:60ch}
+.pos{color:var(--pos);font-weight:700}
+.neg{color:var(--neg);font-weight:700}
+button{font:inherit;font-weight:700;cursor:pointer;border-radius:999px;padding:.6em 1.2em;border:2px solid var(--btn);background:var(--btn);color:var(--btn-ink)}
+button.ghost{background:transparent;color:var(--ink)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,summary:focus-visible,[role=tab]:focus-visible{outline:3px solid var(--neg);outline-offset:3px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+svg{display:block;width:100%;height:auto}
+.scroll{overflow-x:auto}
+
+/* hero */
+header{padding:48px 0 56px}
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:center;margin-top:28px}
+.symbol{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:clamp(4.5rem,13vw,8rem);line-height:1;letter-spacing:-.04em}
+.symbol sup{font-size:.45em;vertical-align:.95em;margin-left:.04em}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+.count{background:var(--surface2);border-radius:12px;padding:10px 8px;text-align:center}
+.count b{display:block;font-size:1.6rem;font-family:"Bricolage Grotesque",system-ui,sans-serif}
+.count span{font-size:.85rem;color:var(--muted)}
+.statename{font-weight:700;font-size:1.15rem;margin-bottom:.3em}
+.note{font-size:.95rem;color:var(--muted)}
+.shell{transform-origin:160px 160px}
+@media (prefers-reduced-motion:no-preference){
+  .shell.s1{animation:spin 14s linear infinite}
+  .shell.s2{animation:spin 26s linear infinite reverse}
+  #balloonGroup{transition:transform .35s ease}
+  .strand{transition:d .5s ease}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* table */
+table{border-collapse:collapse;width:100%;min-width:560px;background:var(--surface);border-radius:14px;overflow:hidden}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--surface2)}
+tr:last-child td{border-bottom:0}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.readout{font-weight:700;min-height:3.2em}
+input[type=range]{width:100%;accent-color:var(--neg)}
+
+/* tabs */
+[role=tablist]{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+[role=tab]{background:transparent;color:var(--ink);border:2px solid var(--line);font-weight:700}
+[role=tab][aria-selected=true]{border-color:var(--btn);background:var(--btn);color:var(--btn-ink)}
+.model{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center}
+.model dl{margin:0}
+.model dt{font-weight:700;margin-top:.6em}
+.model dd{margin:0 0 .2em}
+
+/* check yourself */
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:700}
+details p{margin:.8em 0 0}
+.vocab{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.vocab div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.vocab b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.1rem}
+footer{padding:40px 0 60px;color:var(--muted);font-size:.95rem;border-top:1px solid var(--line)}
+
+@media (max-width:760px){
+  .hero,.two,.model{grid-template-columns:1fr}
+  .model svg{max-width:240px}
+  .counts{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <h1>Charges, electrons, and static electricity</h1>
+  <p class="lede">Everything in this guide comes down to one idea: in everyday charging, electrons move and protons stay put. Start by changing the electrons on a lithium atom.</p>
+
+  <div class="hero">
+    <div class="panel">
+      <svg id="atom" viewBox="0 0 320 320" role="img" aria-label="Bohr model of a lithium atom"></svg>
+    </div>
+    <div>
+      <div class="symbol" id="sym" aria-live="polite">Li</div>
+      <div class="counts">
+        <div class="count"><b class="pos" id="cP">3</b><span>protons (+)</span></div>
+        <div class="count"><b class="neg" id="cE">3</b><span>electrons (−)</span></div>
+        <div class="count"><b id="cN">4</b><span>neutrons (0)</span></div>
+        <div class="count"><b id="cQ">0</b><span>net charge</span></div>
+      </div>
+      <div class="statename" id="sName">Neutral lithium atom</div>
+      <p id="sText"></p>
+      <div class="btns">
+        <button id="rm">Remove an electron</button>
+        <button id="add" class="ghost">Add an electron</button>
+      </div>
+      <p class="note" id="sNote">Net charge = protons − electrons. Notice the proton count never changes. That's what keeps it lithium.</p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Reading an ion's symbol</h2>
+    <p>The superscript on a symbol tells you the net charge, and the net charge tells you how electrons compare with protons. It does not tell you anything about neutrons. Those depend on the isotope (most lithium has 4).</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Symbol</th><th>Protons</th><th>Electrons</th><th>Net charge</th><th>What happened</th></tr></thead>
+        <tbody>
+          <tr><td><b>Li</b></td><td>3</td><td>3</td><td>0</td><td>Neutral atom. Positive and negative charges balance exactly.</td></tr>
+          <tr><td><b>Li⁺</b></td><td>3</td><td>2</td><td class="pos">+1</td><td>Lost one electron. Fewer negatives than positives, so it is a positive ion (cation).</td></tr>
+          <tr><td><b>Li⁻</b></td><td>3</td><td>4</td><td class="neg">−1</td><td>Gained one electron. More negatives than positives, so it is a negative ion (anion).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1em">Why is Li⁺ common and Li⁻ rare? Lithium's third electron sits alone in the outer shell, far from the nucleus, with two inner electrons partly blocking the nucleus's pull. It is easy to remove. Li⁻ can exist under special conditions, but in nature and in the lab lithium almost always shows up as Li⁺.</p>
+    <p>The pattern to remember: <b>a positive charge means missing electrons, not extra protons.</b> A negative charge means extra electrons.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What can move, and what can't</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Particle</th><th>Charge</th><th>Where it is</th><th>Can it move from one object to another by rubbing?</th></tr></thead>
+        <tbody>
+          <tr><td class="pos">Proton</td><td>+1</td><td>Locked in the nucleus</td><td>No. Protons are held in the nucleus by the strong nuclear force. Moving one would change which element the atom is.</td></tr>
+          <tr><td>Neutron</td><td>0</td><td>Locked in the nucleus</td><td>No, and it has no charge anyway, so it plays no part in static electricity.</td></tr>
+          <tr><td class="neg">Electron</td><td>−1</td><td>Outside the nucleus, with outer electrons farthest out</td><td>Yes. Outer electrons are the least tightly held particles, and they are on the surface where objects touch.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1em">Charge is never created or destroyed. When one object becomes positive, another object becomes equally negative, because the electrons just changed places. This is called <b>conservation of charge</b>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>The rules of attraction</h2>
+    <div class="two">
+      <div>
+        <p>Charged particles push or pull on each other without touching. That push or pull is the <b>electric force</b>, and it follows three rules:</p>
+        <p><b>Opposite charges attract.</b> Positive pulls on negative.<br>
+        <b>Like charges repel.</b> Negative pushes negative, positive pushes positive.<br>
+        <b>Closer means stronger.</b> Halve the distance and the force becomes about four times stronger.</p>
+        <p>Flip the signs and move the slider to test each rule.</p>
+      </div>
+      <div class="panel">
+        <svg id="pair" viewBox="0 0 600 170" role="img" aria-label="Two charged particles and the forces between them"></svg>
+        <div class="btns">
+          <button id="flipA" class="ghost">Flip left charge</button>
+          <button id="flipB" class="ghost">Flip right charge</button>
+        </div>
+        <label for="dist">Distance apart</label>
+        <input type="range" id="dist" min="120" max="440" value="300">
+        <p class="readout" id="pairText" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Electron transfer: balloon and hair</h2>
+    <p>Both objects start neutral, each with equal numbers of positive and negative charges. Rubbing brings the surfaces into close contact, and electrons move from the hair to the balloon because the balloon's rubber holds electrons more strongly than hair does. Rub a few times, then look at what the hair does.</p>
+    <div class="panel">
+      <svg id="rub" viewBox="0 0 600 340" role="img" aria-label="A child's hair and a balloon showing charges"></svg>
+      <div class="btns">
+        <button id="rubBtn">Rub balloon on hair</button>
+        <button id="resetBtn" class="ghost">Reset</button>
+      </div>
+      <div class="counts" style="grid-template-columns:repeat(3,1fr)">
+        <div class="count"><b id="moved">0</b><span>electrons moved</span></div>
+        <div class="count"><b class="pos" id="hairQ">0</b><span>hair charge</span></div>
+        <div class="count"><b class="neg" id="balQ">0</b><span>balloon charge</span></div>
+      </div>
+      <p class="readout" id="rubText" aria-live="polite"></p>
+    </div>
+    <p style="margin-top:1em">Things to notice in the model: the <span class="pos">+</span> signs never move. Only <span class="neg">−</span> signs cross from hair to balloon. The hair's charge and the balloon's charge are always equal in size and opposite in sign. And the strands of hair, now all positive, spread apart from each other as well as reaching toward the balloon.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Why a charged object can attract a neutral one</h2>
+    <div class="two">
+      <div>
+        <p>A charged balloon will also stick to a wall, even though the wall has no net charge. No electrons jump between them. Instead, the balloon's extra electrons repel the electrons in the wall's atoms, pushing them slightly to the far side of each atom. That leaves the side of each atom nearest the balloon slightly positive.</p>
+        <p>This is called <b>polarization</b>. The nearby positive side is closer to the balloon than the shifted negative side, and since closer means stronger, the attraction wins over the repulsion.</p>
+      </div>
+      <div class="panel">
+        <svg viewBox="0 0 420 260" role="img" aria-label="Negative balloon near a wall whose atoms have electron clouds shifted away from the balloon">
+          <rect x="250" y="10" width="160" height="240" rx="6" fill="var(--surface2)" stroke="var(--line)"/>
+          <ellipse cx="130" cy="120" rx="80" ry="96" fill="var(--balloon)" opacity=".9"/>
+          <g fill="#fff" font-weight="700" font-size="22" text-anchor="middle">
+            <text x="175" y="90">−</text><text x="182" y="128">−</text><text x="174" y="166">−</text><text x="120" y="110">−</text><text x="118" y="150">−</text>
+          </g>
+          <g id="wallAtoms"></g>
+          <text x="330" y="244" text-anchor="middle" font-size="13" fill="var(--muted)">wall atoms</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Same atom, different models</h2>
+    <p>No single model shows everything. Each one makes some features easy to see by leaving others out. Scientists switch between models depending on the question.</p>
+    <div class="panel">
+      <div role="tablist" aria-label="Atomic models" id="tabs"></div>
+      <div id="modelPanel" role="tabpanel" class="model"></div>
+    </div>
+    <p style="margin-top:1em">A useful habit: when you explain something, say which model you are using and why it fits. The shell model is good for counting electrons and seeing why lithium loses one. The plus-and-minus model is good for tracking which object gained or lost charge. The cloud model is good for explaining polarization.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Two scales, one event</h2>
+    <p>Static electricity happens at two scales at once. At the macroscopic scale you see objects move. At the atomic scale, too small to see, electrons move. A complete explanation connects the two: what you saw, and the particle-level cause of it.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Macroscopic scale (what you see)</th><th>Atomic scale (what's happening)</th></tr></thead>
+        <tbody>
+          <tr><td>You rub two objects together.</td><td>Surface atoms come into close contact, and electrons transfer from one material to the other.</td></tr>
+          <tr><td>Nothing looks different about the objects.</td><td>One object now has extra electrons, and the other is missing the same number. Each has a small net charge.</td></tr>
+          <tr><td>The objects pull toward each other.</td><td>Opposite net charges attract through the electric force.</td></tr>
+          <tr><td>Strands of hair stand up and spread apart.</td><td>Every strand lost electrons, so every strand is positive, and like charges repel.</td></tr>
+          <tr><td>You feel a small shock touching a doorknob.</td><td>Extra electrons rush between you and the metal all at once to even out the charge imbalance.</td></tr>
+          <tr><td>The attraction fades after a while.</td><td>Electrons slowly leak to or from the air (especially humid air) until both objects are neutral again.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Key words</h2>
+    <div class="vocab">
+      <div><b>Electron</b>Negative particle outside the nucleus. The only particle that moves between objects in static electricity.</div>
+      <div><b>Proton</b>Positive particle in the nucleus. Its number defines the element and does not change.</div>
+      <div><b>Charge</b>A property of particles that causes electric force. Objects get a net charge when electrons are gained or lost.</div>
+      <div><b>Positive</b>Fewer electrons than protons. The object lost electrons.</div>
+      <div><b>Negative</b>More electrons than protons. The object gained electrons.</div>
+      <div><b>Neutral</b>Equal numbers of electrons and protons, so no net charge.</div>
+      <div><b>Attract</b>Pull together. Happens between opposite charges.</div>
+      <div><b>Repel</b>Push apart. Happens between like charges.</div>
+      <div><b>Ion</b>An atom with a net charge because it gained or lost electrons, like Li⁺.</div>
+      <div><b>Polarization</b>Electrons in a neutral object shifting to one side because a charged object is nearby.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Check yourself</h2>
+    <p>Try answering each one out loud before opening it.</p>
+    <details><summary>An oxygen atom has 8 protons. O²⁻ has how many electrons?</summary><p>10. A 2− charge means two more electrons than protons: 8 + 2 = 10.</p></details>
+    <details><summary>A sock comes out of the dryer with a positive charge. Did it gain protons?</summary><p>No. Protons are locked in nuclei. The sock lost electrons to something else in the dryer, which is now negative by the same amount.</p></details>
+    <details><summary>A wool cloth gives 1,000 electrons to a plastic rod. What is the charge on each?</summary><p>The rod is −1,000 (in electron charges) and the cloth is +1,000. Total charge before and after is zero.</p></details>
+    <details><summary>Two balloons are both rubbed on the same sweater. What happens when you hold them near each other?</summary><p>They repel. Both took electrons from the sweater, so both are negative, and like charges repel.</p></details>
+    <details><summary>Why does a charged object attract tiny bits of neutral paper?</summary><p>The charged object polarizes the paper's atoms, shifting their electrons. The side of the paper nearest the object ends up with the opposite charge, and because it is closer, the attraction is stronger than the repulsion.</p></details>
+    <details><summary>Which model would you pick to show why lithium tends to form Li⁺ instead of Li⁻?</summary><p>The shell (Bohr) model, because it shows the single electron alone in the outer shell, far from the nucleus and easy to remove.</p></details>
+  </div>
+</section>
+
+<footer class="wrap">
+  When you write an explanation, aim for three parts: what you observed, what happened to the electrons, and which rule of charge explains the result.
+</footer>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const el=(t,a,parent)=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);if(parent)parent.appendChild(n);return n;};
+  const txt=(s,a,parent)=>{const n=el("text",a,parent);n.textContent=s;return n;};
+
+  /* ---------- Lithium atom ---------- */
+  let electrons=3;
+  const atom=document.getElementById("atom");
+  const states={
+    2:{sym:'Li<sup>+</sup>',name:"Lithium ion, Li⁺ (a cation)",text:"The outer electron is gone. 3 protons and only 2 electrons leaves one unbalanced positive charge. This is the form lithium takes in salts, in your body, and in lithium-ion batteries.",note:"Removing another electron would mean pulling one out of the inner shell, which takes about 14 times more energy. That's why lithium stops at +1."},
+    3:{sym:'Li',name:"Neutral lithium atom",text:"3 protons and 3 electrons. Every positive charge is matched by a negative one, so the atom has no net charge. Two electrons fill the inner shell, and one sits alone in the outer shell.",note:"Net charge = protons − electrons. Notice the proton count never changes. That's what keeps it lithium."},
+    4:{sym:'Li<sup>−</sup>',name:"Lithide ion, Li⁻ (an anion)",text:"One extra electron joined the outer shell. 3 protons and 4 electrons leaves one unbalanced negative charge. This ion is real but rare, because lithium holds an extra electron only weakly.",note:"The nucleus is identical in all three versions. Only the electron count changed."}
+  };
+  function drawAtom(){
+    atom.innerHTML="";
+    el("circle",{cx:160,cy:160,r:58,fill:"none",stroke:"var(--line)","stroke-width":2,"stroke-dasharray":"4 5"},atom);
+    el("circle",{cx:160,cy:160,r:118,fill:"none",stroke:"var(--line)","stroke-width":2,"stroke-dasharray":"4 5"},atom);
+    const nuc=[[-9,-9,"p"],[9,-9,"n"],[0,6,"p"],[-14,7,"n"],[14,7,"p"],[0,-20,"n"],[0,20,"n"]];
+    nuc.forEach(([x,y,t])=>{
+      el("circle",{cx:160+x,cy:160+y,r:10,fill:t==="p"?"var(--pos)":"var(--neu)",stroke:"var(--surface)","stroke-width":1.5},atom);
+      if(t==="p")txt("+",{x:160+x,y:164+y,"text-anchor":"middle","font-size":13,"font-weight":700,fill:"#fff"},atom);
+    });
+    const drawE=(g,ang,r)=>{
+      const x=160+r*Math.cos(ang),y=160+r*Math.sin(ang);
+      el("circle",{cx:x,cy:y,r:11,fill:"var(--neg)"},g);
+      txt("−",{x:x,y:y+5,"text-anchor":"middle","font-size":16,"font-weight":700,fill:"#fff"},g);
+    };
+    const s1=el("g",{class:"shell s1"},atom);
+    drawE(s1,0,58);drawE(s1,Math.PI,58);
+    const s2=el("g",{class:"shell s2"},atom);
+    if(electrons>=3)drawE(s2,-Math.PI/2,118);
+    if(electrons>=4)drawE(s2,Math.PI/2,118);
+    txt("inner shell",{x:160,y:96,"text-anchor":"middle","font-size":11,fill:"var(--muted)"},atom);
+    txt("outer shell",{x:160,y:310,"text-anchor":"middle","font-size":11,fill:"var(--muted)"},atom);
+    const s=states[electrons];
+    document.getElementById("sym").innerHTML=s.sym;
+    document.getElementById("cE").textContent=electrons;
+    const q=3-electrons;
+    const cQ=document.getElementById("cQ");
+    cQ.textContent=q>0?"+"+q:q<0?"−"+Math.abs(q):"0";
+    cQ.className=q>0?"pos":q<0?"neg":"";
+    document.getElementById("sName").textContent=s.name;
+    document.getElementById("sText").textContent=s.text;
+    document.getElementById("sNote").textContent=s.note;
+    document.getElementById("rm").disabled=electrons<=2;
+    document.getElementById("add").disabled=electrons>=4;
+  }
+  document.getElementById("rm").onclick=()=>{if(electrons>2){electrons--;drawAtom();}};
+  document.getElementById("add").onclick=()=>{if(electrons<4){electrons++;drawAtom();}};
+  drawAtom();
+
+  /* ---------- Charge pair ---------- */
+  let signA=-1,signB=1;
+  const pair=document.getElementById("pair"),dist=document.getElementById("dist");
+  function arrow(g,x1,x2,color){
+    const y=85,dir=Math.sign(x2-x1);
+    el("line",{x1:x1,y1:y,x2:x2-dir*10,y2:y,stroke:color,"stroke-width":5,"stroke-linecap":"round"},g);
+    el("path",{d:`M${x2},${y} L${x2-dir*16},${y-10} L${x2-dir*16},${y+10} Z`,fill:color},g);
+  }
+  function drawPair(){
+    pair.innerHTML="";
+    const d=+dist.value,ax=300-d/2,bx=300+d/2;
+    const len=Math.max(14,Math.min(110,6000000/(d*d)/4));
+    const attract=signA!==signB;
+    const col="var(--ink)";
+    if(attract){arrow(pair,ax+30,ax+30+len,col);arrow(pair,bx-30,bx-30-len,col);}
+    else{arrow(pair,ax-30,ax-30-len,col);arrow(pair,bx+30,bx+30+len,col);}
+    [[ax,signA],[bx,signB]].forEach(([x,s])=>{
+      el("circle",{cx:x,cy:85,r:26,fill:s>0?"var(--pos)":"var(--neg)"},pair);
+      txt(s>0?"+":"−",{x:x,y:95,"text-anchor":"middle","font-size":30,"font-weight":700,fill:"#fff"},pair);
+    });
+    const strength=d<200?"strong":d<330?"medium":"weak";
+    document.getElementById("pairText").textContent=(attract?"Opposite charges: they attract.":"Like charges: they repel.")+" At this distance the force is "+strength+".";
+  }
+  document.getElementById("flipA").onclick=()=>{signA*=-1;drawPair();};
+  document.getElementById("flipB").onclick=()=>{signB*=-1;drawPair();};
+  dist.oninput=drawPair;
+  drawPair();
+
+  /* ---------- Balloon and hair ---------- */
+  const MAX=10;let moved=0;
+  const rub=document.getElementById("rub");
+  const hairSpots=[];for(let r=0;r<2;r++)for(let c=0;c<5;c++)hairSpots.push([92+c*24,118+r*28]);
+  const balSpots=[];for(let r=0;r<4;r++)for(let c=0;c<3;c++)balSpots.push([408+c*30,92+r*32]);
+  const extraSpots=[[352,96],[346,122],[344,148],[346,174],[352,200],[372,80],[368,216],[392,68],[390,230],[372,110]];
+  const strands=[];for(let i=0;i<9;i++)strands.push(80+i*13);
+  function drawRub(touching){
+    rub.innerHTML="";
+    // head
+    el("circle",{cx:150,cy:230,r:62,fill:"var(--skin)"},rub);
+    el("rect",{x:110,y:282,width:80,height:60,rx:20,fill:"var(--skin)"},rub);
+    // hair strands
+    strands.forEach((bx,i)=>{
+      const by=176+Math.abs(i-4)*3;
+      const lift=moved/MAX;
+      const spread=(i-4)*lift*10;
+      const tipX=bx+spread+lift*70+(1-lift)*((i-4)*2);
+      const tipY=by-(30+lift*50)+(1-lift)*0;
+      const d=`M${bx},${by} Q${bx+spread*0.4+lift*20},${by-30} ${tipX},${tipY}`;
+      el("path",{class:"strand",d:d,stroke:"var(--hair)","stroke-width":7,fill:"none","stroke-linecap":"round"},rub);
+    });
+    el("path",{d:"M88,200 Q150,150 212,200 Q190,178 150,176 Q110,178 88,200Z",fill:"var(--hair)"},rub);
+    // hair charges
+    hairSpots.forEach(([x,y],i)=>{
+      txt("+",{x:x,y:y,"text-anchor":"middle","font-size":20,"font-weight":700,fill:"var(--pos)"},rub);
+      if(i>=moved)txt("−",{x:x+12,y:y,"text-anchor":"middle","font-size":20,"font-weight":700,fill:"var(--neg)"},rub);
+    });
+    // balloon
+    const g=el("g",{id:"balloonGroup",style:`transform:translateX(${touching?-150:0}px)`},rub);
+    el("path",{d:"M440,268 q-8,30 6,70",stroke:"var(--muted)","stroke-width":2,fill:"none"},g);
+    el("ellipse",{cx:440,cy:150,rx:100,ry:118,fill:"var(--balloon)",opacity:.35},g);
+    el("path",{d:"M432,266 l8,10 l8,-10 z",fill:"var(--balloon)",opacity:.6},g);
+    balSpots.forEach(([x,y])=>{
+      txt("+",{x:x,y:y,"text-anchor":"middle","font-size":20,"font-weight":700,fill:"var(--pos)"},g);
+      txt("−",{x:x+12,y:y,"text-anchor":"middle","font-size":20,"font-weight":700,fill:"var(--neg)"},g);
+    });
+    for(let i=0;i<moved;i++){const [x,y]=extraSpots[i];
+      el("circle",{cx:x,cy:y-6,r:11,fill:"var(--surface)",stroke:"var(--neg)","stroke-width":2},g);
+      txt("−",{x:x,y:y,"text-anchor":"middle","font-size":20,"font-weight":700,fill:"var(--neg)"},g);
+    }
+    txt("hair",{x:150,y:100,"text-anchor":"middle","font-size":13,fill:"var(--muted)"},rub);
+    txt("balloon",{x:440,y:24,"text-anchor":"middle","font-size":13,fill:"var(--muted)"},g);
+    document.getElementById("moved").textContent=moved;
+    document.getElementById("hairQ").textContent=moved?"+"+moved:"0";
+    document.getElementById("balQ").textContent=moved?"−"+moved:"0";
+    let t;
+    if(moved===0)t="Both objects are neutral: every + has a matching −. No net charge, so no attraction yet.";
+    else if(moved<MAX)t=`The hair lost ${moved} electron${moved>1?"s":""} and is now positive. The balloon gained the same ${moved} and is now negative. Opposite charges attract, so the hair reaches toward the balloon.`;
+    else t="The hair has given up all the loosely held electrons in this model. The balloon is strongly negative and the hair strongly positive, so the pull between them is at its strongest.";
+    document.getElementById("rubText").textContent=t;
+    document.getElementById("rubBtn").disabled=moved>=MAX;
+  }
+  document.getElementById("rubBtn").onclick=()=>{
+    if(moved>=MAX)return;
+    document.getElementById("rubBtn").disabled=true;
+    document.getElementById("balloonGroup").style.transform="translateX(-150px)";
+    setTimeout(()=>{moved=Math.min(MAX,moved+2);drawRub(true);
+      requestAnimationFrame(()=>{const g=document.getElementById("balloonGroup");g.style.transform="translateX(0px)";});
+    },350);
+  };
+  document.getElementById("resetBtn").onclick=()=>{moved=0;drawRub(false);};
+  drawRub(false);
+
+  /* ---------- Polarized wall ---------- */
+  const wall=document.getElementById("wallAtoms");
+  for(let r=0;r<4;r++)for(let c=0;c<3;c++){
+    const x=290+c*45,y=50+r*52;
+    el("ellipse",{cx:x+7,cy:y,rx:20,ry:16,fill:"var(--neg)",opacity:.22},wall);
+    el("circle",{cx:x-4,cy:y,r:6,fill:"var(--pos)"},wall);
+    txt("+",{x:x-4,y:y+4,"text-anchor":"middle","font-size":10,"font-weight":700,fill:"#fff"},wall);
+  }
+
+  /* ---------- Models tabs ---------- */
+  const models=[
+    {id:"bohr",name:"Shell (Bohr) model",
+     svg:`<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="40" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="100" cy="100" r="78" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="100" cy="100" r="14" fill="var(--pos)"/><circle cx="140" cy="100" r="8" fill="var(--neg)"/><circle cx="60" cy="100" r="8" fill="var(--neg)"/><circle cx="100" cy="22" r="8" fill="var(--neg)"/></svg>`,
+     shows:"How many electrons are in each shell, and that the outer electron is farther from the nucleus. Great for counting particles and explaining why lithium loses one electron.",
+     hides:"Electrons don't really travel in neat circular orbits, and the drawing isn't to scale. A real nucleus is about 100,000 times smaller than the atom."},
+    {id:"cloud",name:"Electron cloud model",
+     svg:`<svg viewBox="0 0 200 200"><defs><radialGradient id="cg"><stop offset="0" stop-color="var(--neg)" stop-opacity=".55"/><stop offset=".45" stop-color="var(--neg)" stop-opacity=".2"/><stop offset=".6" stop-color="var(--neg)" stop-opacity=".12"/><stop offset="1" stop-color="var(--neg)" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="90" fill="url(#cg)"/><circle cx="100" cy="100" r="6" fill="var(--pos)"/></svg>`,
+     shows:"Electrons as a fuzzy region where they are likely to be found. Shows that electron clouds can shift and stretch, which is the key to polarization.",
+     hides:"Exact electron counts are hard to see, and it doesn't make it obvious which electrons are easiest to remove."},
+    {id:"charge",name:"Plus-and-minus model",
+     svg:`<svg viewBox="0 0 200 200"><rect x="30" y="40" width="140" height="120" rx="16" fill="var(--surface2)" stroke="var(--line)"/><g font-size="26" font-weight="700" text-anchor="middle"><text x="65" y="85" fill="var(--pos)">+</text><text x="88" y="85" fill="var(--neg)">−</text><text x="125" y="85" fill="var(--pos)">+</text><text x="148" y="85" fill="var(--neg)">−</text><text x="65" y="135" fill="var(--pos)">+</text><text x="88" y="135" fill="var(--neg)">−</text><text x="125" y="135" fill="var(--pos)">+</text></g></svg>`,
+     shows:"The balance of charges in a whole object. Makes it easy to track which object gained or lost electrons and what its net charge is.",
+     hides:"Atoms, shells, and nuclei disappear. Each sign stands in for huge numbers of real particles, and it can make protons look like they could move when they can't."},
+    {id:"macro",name:"Macroscopic view",
+     svg:`<svg viewBox="0 0 200 200"><ellipse cx="120" cy="90" rx="50" ry="60" fill="var(--balloon)"/><path d="M120,150 q-4,20 4,40" stroke="var(--muted)" stroke-width="2" fill="none"/><circle cx="50" cy="130" r="30" fill="var(--skin)"/><path d="M28,112 Q40,70 66,74 M38,108 Q52,66 76,78 M50,104 Q66,66 84,84" stroke="var(--hair)" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`,
+     shows:"What you can actually observe: objects attracting, repelling, sticking, or sparking. This is the evidence that something is happening.",
+     hides:"The cause. You can't see a single electron, so this view tells you what happened but not why."}
+  ];
+  const tabs=document.getElementById("tabs"),panel=document.getElementById("modelPanel");
+  function showModel(i){
+    [...tabs.children].forEach((b,j)=>{b.setAttribute("aria-selected",i===j);b.tabIndex=i===j?0:-1;});
+    const m=models[i];
+    panel.innerHTML=`${m.svg}<div><h3>${m.name}</h3><dl><dt>What it shows well</dt><dd>${m.shows}</dd><dt>What it leaves out</dt><dd>${m.hides}</dd></dl></div>`;
+  }
+  models.forEach((m,i)=>{
+    const b=document.createElement("button");b.setAttribute("role","tab");b.textContent=m.name;
+    b.onclick=()=>showModel(i);
+    b.onkeydown=e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){const n=(i+(e.key==="ArrowRight"?1:-1)+models.length)%models.length;showModel(n);tabs.children[n].focus();}};
+    tabs.appendChild(b);
+  });
+  showModel(0);
+})();
+</script>
+</body>
+</html>
