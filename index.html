@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Charges, electrons, and static electricity</title>
+<title>Chemistry study guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
@@ -29,6 +29,7 @@
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:1.0625rem;line-height:1.6}
 h1,h2,h3{font-family:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;line-height:1.15;margin:0 0 .5em}
@@ -103,12 +104,75 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.95rem;border-top:1px so
   .model svg{max-width:240px}
   .counts{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ---------- guide structure (matches the algebra guide's pattern) ---------- */
+:root{--note:#B42318;--ans-bg:#E8F3EC;--ans-ink:#1E6B3A;--mark:#FBE7A1}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--note:#F49A8F;--ans-bg:#17301F;--ans-ink:#8FD6A8;--mark:#5E5014}}
+:root[data-theme="dark"]{--note:#F49A8F;--ans-bg:#17301F;--ans-ink:#8FD6A8;--mark:#5E5014}
+.site{padding:40px 0 8px}
+.site h1{margin-bottom:.3em}
+.topics,.subtabs{display:flex;flex-wrap:wrap;gap:8px}
+.topics{margin:18px 0 0}
+.subtabs{margin:8px 0 24px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+.topics [role=tab],.subtabs [role=tab]{font-size:.98rem;padding:.45em 1.05em}
+.topic{padding-bottom:40px}
+#topic-static{max-width:none;padding:0}
+#topic-static>header{padding-top:24px}
+.th{font-size:clamp(1.7rem,4.4vw,2.5rem);font-weight:800;letter-spacing:-.02em}
+.gpanel{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}.gpanel>*{min-width:0}
+.gpanel h2{margin-top:1.2em}.gpanel>h2:first-child{margin-top:.2em}
+.gpanel h3{margin-top:1.4em}
+ol.check{padding-left:1.3em;max-width:72ch}ol.check li{margin:.45em 0}
+.formula{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.98rem;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--neg);border-radius:8px;padding:12px 16px;display:grid;gap:4px;margin:8px 0 14px;overflow-x:auto}
+.formula i{font-family:"Atkinson Hyperlegible",system-ui,sans-serif;color:var(--muted);font-style:normal;font-size:.9rem}
+.fnote{color:var(--muted);font-size:.88rem}
+.cue{font-weight:700}
+.mark{background:linear-gradient(transparent 55%,var(--mark) 55%);padding:0 .1em}
+.where{color:var(--muted);font-style:italic;font-size:.95rem}
+.tip,.aside{background:var(--surface2);border-radius:12px;padding:12px 16px;max-width:72ch}
+.aside{margin-top:1.6em;border:1px dashed var(--muted)}.aside h3{margin-top:0}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+.problem{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--btn);border-radius:12px;padding:14px 18px;margin:10px 0}
+.problem .head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.problem .num{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:1.1rem}
+.tag{font-size:.82rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0 .6em}
+.problem>p{margin:.4em 0 .3em}
+.problem details{background:transparent;border:0;padding:0;margin:.4em 0 0}
+.problem .steps p{margin:.45em 0}
+.pattern{background:var(--surface2);border-radius:8px;padding:8px 12px;margin:.6em 0;font-size:.97rem}
+.pattern p{margin:.15em 0!important}
+.calc{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.95rem;display:grid;gap:3px;padding:8px 0;overflow-x:auto;white-space:pre}
+.calc i{font-family:"Atkinson Hyperlegible",system-ui,sans-serif;color:var(--muted);font-size:.85rem}
+.answer{background:var(--ans-bg);color:var(--ans-ink);font-weight:700;border-radius:8px;padding:8px 12px;margin-top:.6em}
+.note{color:var(--note)!important;border-left:3px solid var(--note);padding-left:10px;font-size:.97rem}
+.fine{font-size:.88rem;color:var(--muted)}
+td.fill{font-weight:700;color:var(--neg)}
+table.akey{min-width:0}
+.gpanel table{min-width:0;font-size:.95rem}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:10px 0}
+.fields figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.fields svg{max-width:200px;margin:0 auto}
+.fields figcaption{font-size:.9rem;color:var(--muted);text-align:center;margin-top:6px}
+.fields figcaption b{color:var(--ink)}
+@media (max-width:760px){.fields{grid-template-columns:1fr}.calc{font-size:.85rem}}
+@media print{.topics,.subtabs,.toolbar{display:none}.topic[hidden],.gpanel[hidden]{display:block!important}details{display:block}details>summary{display:none}}
+
 </style>
 </head>
 <body>
 
+<div class="site wrap">
+  <h1>Chemistry study guide</h1>
+  <nav class="topics" role="tablist" aria-label="Topic">
+    <button type="button" role="tab" id="topictab-static" aria-controls="topic-static" aria-selected="true">Static electricity</button>
+    <button type="button" role="tab" id="topictab-sub" aria-controls="topic-sub" aria-selected="false" tabindex="-1">Subatomic particles &amp; fields</button>
+    <button type="button" role="tab" id="topictab-iso" aria-controls="topic-iso" aria-selected="false" tabindex="-1">Isotopes &amp; atomic mass</button>
+  </nav>
+</div>
+
+<div class="topic" id="topic-static" role="tabpanel" aria-labelledby="topictab-static">
 <header class="wrap">
-  <h1>Charges, electrons, and static electricity</h1>
+  <h2 class="th">Charges, electrons, and static electricity</h2>
   <p class="lede">Everything in this guide comes down to one idea: in everyday charging, electrons move and protons stay put. Start by changing the electrons on a lithium atom.</p>
 
   <div class="hero">
@@ -301,9 +365,601 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.95rem;border-top:1px so
     <details><summary>Which model would you pick to show why lithium tends to form Li⁺ instead of Li⁻?</summary><p>The shell (Bohr) model, because it shows the single electron alone in the outer shell, far from the nucleus and easy to remove.</p></details>
   </div>
 </section>
+</div>
+
+<div class="topic wrap" id="topic-sub" role="tabpanel" aria-labelledby="topictab-sub" hidden>
+<p class="lede">Quiz 2 review. Three rules let you fill in any particle table, and three field pictures cover every “draw the field” question.</p>
+
+<div class="subtabs" role="tablist" aria-label="Subatomic particle sections">
+  <button type="button" role="tab" id="tab-s-check" aria-controls="panel-s-check" aria-selected="true">Checklist</button>
+  <button type="button" role="tab" id="tab-s-pat" aria-controls="panel-s-pat" aria-selected="false" tabindex="-1">Patterns</button>
+  <button type="button" role="tab" id="tab-s-solved" aria-controls="panel-s-solved" aria-selected="false" tabindex="-1">Solved problems</button>
+  <button type="button" role="tab" id="tab-s-practice" aria-controls="panel-s-practice" aria-selected="false" tabindex="-1">Practice test</button>
+</div>
+
+<div class="gpanel" id="panel-s-check" role="tabpanel" aria-labelledby="tab-s-check" tabindex="0">
+<h2>The checklist</h2>
+<div class="formula">
+  <span>protons = atomic number   <i>(decides the element)</i></span>
+  <span>mass = protons + neutrons</span>
+  <span>charge = protons − electrons</span>
+</div>
+<ol class="check">
+  <li><b>Particle table?</b> Find the row's two known numbers and use the rule that connects them. Each row needs at most two of the three rules.</li>
+  <li><b>“Neutral”</b> means protons = electrons. A <b>+</b> charge means missing electrons; a <b>−</b> charge means extra electrons. Never extra protons.</li>
+  <li><b>“What changes if you change it?”</b> Protons → the element. Neutrons → the mass (an isotope). Electrons → the charge (an ion).</li>
+  <li><b>Something rubbed?</b> Only electrons move. The two objects end up with equal and opposite charges.</li>
+  <li><b>Draw a field?</b> Electric: away from +, toward −. Gravity: always toward the mass. Magnetic: out of N, around, into S. Then a force arrow on the test particle.</li>
+</ol>
+</div>
+
+<div class="gpanel" id="panel-s-pat" role="tabpanel" aria-labelledby="tab-s-pat" tabindex="0" hidden>
+<h2>The five patterns</h2>
+
+<h3>1 · Labeling an atom</h3>
+<p><span class="cue">Cue:</span> A drawing of a nucleus with dots around it, labeled “neutral.”</p>
+<p><span class="cue">Method:</span> Dots outside are electrons (−). Inside the nucleus, protons get + and neutrons get no sign. <span class="mark">In a neutral atom, count the electrons: that's how many + you should have.</span></p>
+<p class="where">Worked example: Q1.</p>
+
+<h3>2 · Charging by rubbing</h3>
+<p><span class="cue">Cue:</span> Balloon, sweater, hair, wool, “friction.”</p>
+<p><span class="cue">Method:</span> Before: both neutral (equal + and −). During: <span class="mark">electrons move from one object to the other</span>; + signs stay put. After: the object that gained electrons is −, the other is + by the same amount, and opposites attract.</p>
+<p class="where">Worked example: Q2. The Static electricity tab has an interactive version.</p>
+
+<h3>3 · Drawing a field</h3>
+<p><span class="cue">Cue:</span> “Draw and label the field around …”</p>
+<div class="fields">
+  <figure>
+    <svg viewBox="0 0 200 200" role="img" aria-label="Electric field lines pointing outward from a positive charge">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker></defs>
+      <g stroke="var(--ink)" stroke-width="1.6" marker-end="url(#ah)">
+        <line x1="124" y1="100" x2="186" y2="100"/><line x1="76" y1="100" x2="14" y2="100"/>
+        <line x1="100" y1="124" x2="100" y2="186"/><line x1="100" y1="76" x2="100" y2="14"/>
+        <line x1="117" y1="117" x2="160" y2="160"/><line x1="83" y1="83" x2="40" y2="40"/>
+        <line x1="117" y1="83" x2="160" y2="40"/><line x1="83" y1="117" x2="40" y2="160"/>
+      </g>
+      <circle cx="100" cy="100" r="20" fill="var(--pos)"/><text x="100" y="108" text-anchor="middle" font-size="24" font-weight="700" fill="#fff">+</text>
+    </svg>
+    <figcaption><b>Electric (+ charge)</b><br>Lines point away from +. Around a − charge they point inward.</figcaption>
+  </figure>
+  <figure>
+    <svg viewBox="0 0 200 200" role="img" aria-label="Gravitational field lines pointing inward toward a large mass">
+      <g stroke="var(--ink)" stroke-width="1.6" marker-end="url(#ah)">
+        <line x1="190" y1="100" x2="146" y2="100"/><line x1="10" y1="100" x2="54" y2="100"/>
+        <line x1="100" y1="190" x2="100" y2="146"/><line x1="100" y1="10" x2="100" y2="54"/>
+        <line x1="166" y1="166" x2="134" y2="134"/><line x1="34" y1="34" x2="66" y2="66"/>
+        <line x1="166" y1="34" x2="134" y2="66"/><line x1="34" y1="166" x2="66" y2="134"/>
+      </g>
+      <circle cx="100" cy="100" r="40" fill="var(--surface2)" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="100" y="104" text-anchor="middle" font-size="12" fill="var(--ink)">large mass</text>
+    </svg>
+    <figcaption><b>Gravitational</b><br>Lines always point in, toward the mass. Gravity only attracts.</figcaption>
+  </figure>
+  <figure>
+    <svg viewBox="0 0 220 200" role="img" aria-label="Magnetic field lines leaving the north pole and curving around into the south pole">
+      <g stroke="var(--ink)" stroke-width="1.6" fill="none">
+        <path d="M62,88 C62,40 158,40 158,88"/>
+        <path d="M62,112 C62,160 158,160 158,112"/>
+        <path d="M54,88 C40,10 180,10 166,88"/>
+        <path d="M54,112 C40,190 180,190 166,112"/>
+        <line x1="50" y1="100" x2="10" y2="100" marker-end="url(#ah)"/>
+        <line x1="210" y1="100" x2="174" y2="100" marker-end="url(#ah)"/>
+      </g>
+      <g fill="var(--ink)">
+        <path d="M116,52 l-10,-5 l0,10 z"/><path d="M116,148 l-10,-5 l0,10 z"/>
+        <path d="M116,29 l-10,-5 l0,10 z"/><path d="M116,171 l-10,-5 l0,10 z"/>
+      </g>
+      <rect x="50" y="88" width="60" height="24" fill="var(--pos)"/><rect x="110" y="88" width="60" height="24" fill="var(--neg)"/>
+      <text x="80" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">N</text>
+      <text x="140" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">S</text>
+    </svg>
+    <figcaption><b>Magnetic (bar magnet)</b><br>Lines come out of N, loop around, and go into S.</figcaption>
+  </figure>
+</div>
+<p class="where">Worked example: Q3.</p>
+
+<h3>4 · The force on a particle in a field</h3>
+<p><span class="cue">Cue:</span> “Draw a particle in the field and show the force.”</p>
+<p><span class="cue">Method:</span> <span class="mark">A + test charge is pushed along the field arrows; a − test charge is pushed against them.</span> A small mass is pulled toward the big mass. A small magnet's north end is pushed along the magnetic field line (away from N, toward S).</p>
+<p class="where">Worked example: Q4.</p>
+
+<h3>5 · Particle tables</h3>
+<p><span class="cue">Cue:</span> A grid of protons, neutrons, electrons, mass, and charge with blanks.</p>
+<p><span class="cue">Method:</span> Use the three rules at the top of the checklist. Neutrons = mass − protons. Electrons = protons − charge (so a +1 ion has one fewer electron, a −2 ion has two more).</p>
+<p class="where">Worked examples: Q5 and Q6.</p>
+</div>
+
+<div class="gpanel" id="panel-s-solved" role="tabpanel" aria-labelledby="tab-s-solved" tabindex="0" hidden>
+<h2>Solved problems</h2>
+<p>Quiz 2 Review: Subatomic Particles and Electric Fields. Notes in red refer to what was written on the handed-in copy.</p>
+<div class="toolbar"><button type="button" class="ghost openAll">Show all solutions</button><button type="button" class="ghost closeAll">Hide all solutions</button></div>
+
+<div class="problem">
+  <div class="head"><span class="num">Q1</span><span class="tag">Labeling an atom</span></div>
+  <p>Label the charges and names of the particles that make up the neutral atom. Use “+” and “−” for charges and the names electron, proton, and neutron.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> A nucleus with dots around it, called neutral.</p><p><span class="cue">Method:</span> Electrons outside (−), protons in the nucleus (+), neutrons in the nucleus (no sign). Neutral means #protons = #electrons.</p></div>
+    <p>The worksheet drawing has <b>4 electrons</b> outside the nucleus. A neutral atom needs the same number of protons, so <b>4</b> of the nucleus particles are protons (+). Every other nucleus particle is a neutron and gets no sign.</p>
+    <div class="answer">Outer dots: electron, −. Nucleus particles with +: proton (4 of them). Nucleus particles with no charge: neutron.</div>
+    <p class="note">The handed-in copy labels one of each type, which is what's asked. On a quiz, do the count check too: the number of + signs should match the number of electrons. (I'm reading a scan, so I couldn't tell for sure which nucleus circles were marked.)</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Q2</span><span class="tag">Charging by rubbing</span></div>
+  <p>Show at the particle level what happens when a balloon is rubbed on a sweater (the balloon becomes negative): before, during, and when the balloon is held near the sweater afterward. Draw and label any fields and forces.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> Balloon, sweater, friction.</p><p><span class="cue">Method:</span> Only electrons move; charges end up equal and opposite; opposites attract.</p></div>
+    <p><b>Before.</b> Both are neutral: draw equal numbers of + and − on each.</p>
+    <p><b>Rubbing.</b> Electrons move from the sweater to the balloon. Draw a few − signs crossing over with arrows. The + signs don't move. The balloon now has extra − (negative), and the sweater has the same number of − missing (positive).</p>
+    <p><b>Held apart.</b> Draw electric field lines from the + sweater to the − balloon (field points away from +, toward −). Draw <b>two</b> force arrows: one on the balloon pointing toward the sweater, one on the sweater pointing toward the balloon. They attract because opposite charges attract.</p>
+    <div class="answer">Electrons transfer sweater → balloon. Balloon −, sweater + (equal amounts). They attract; field lines go from sweater to balloon.</div>
+    <p class="note">The explanation on the handed-in copy is right. Two small upgrades: say “electrons” (plural, since many move), and draw a force arrow on each object, not only one arrow between them. One arrow can read as the field instead of the forces.</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Q3</span><span class="tag">Drawing fields</span></div>
+  <p>Draw and label the appropriate fields around a positive charge, a large mass, and a bar magnet.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> “Draw and label the field.”</p><p><span class="cue">Method:</span> Field lines with arrows, not just a circle. The arrows carry the answer.</p></div>
+    <p><b>Positive charge → electric field.</b> Straight lines pointing outward in every direction.</p>
+    <p><b>Large mass → gravitational field.</b> Straight lines pointing inward toward the mass.</p>
+    <p><b>Bar magnet → magnetic field.</b> Curved lines leaving the N end, looping around the magnet, and entering the S end.</p>
+    <p>The three diagrams in the Patterns tab are exactly what to draw.</p>
+    <div class="answer">Electric: arrows out from +. Gravitational: arrows into the mass. Magnetic: loops from N to S.</div>
+    <p class="note">The handed-in copy names all three fields correctly but draws each as a circle. A circle doesn't show direction. Draw lines with arrowheads. The magnet especially needs lines that go from N, around, to S, rather than separate arrows at each end.</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Q4</span><span class="tag">Force in a field</span></div>
+  <p>Draw a particle in each field from Q3 and show and label the force that would act on it.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> “Draw a particle … show the force.”</p><p><span class="cue">Method:</span> Place a test particle, then draw one arrow from it in the direction it's pushed or pulled.</p></div>
+    <p><b>Electric field.</b> A small <b>−</b> charge near the + charge: force arrow pointing <i>toward</i> the + (attract). Or a small <b>+</b> charge: arrow pointing <i>away</i> (repel). Either earns the point if it's labeled.</p>
+    <p><b>Gravitational field.</b> A small mass: arrow pointing toward the large mass.</p>
+    <p><b>Magnetic field.</b> A small magnet or compass needle: its north end is pushed along the field line, away from the bar's N and toward its S.</p>
+    <div class="answer">− charge pulled toward +; small mass pulled toward large mass; compass north end pushed from N toward S.</div>
+    <p class="note">The electric part on the handed-in copy (a − pulled toward the +, a + pushed away) is right. The gravity and magnet parts don't clearly show a test particle with its own force arrow.</p>
+    <p class="fine">Strictly, an electric charge sitting still near a magnet feels no magnetic force. That's why the magnetic answer uses a small magnet. If the class used a different “particle” for this one, go with the teacher's version.</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Q5</span><span class="tag">Particle properties</span></div>
+  <p>Complete the table: charge, relative mass, location, and the effect of changing the quantity for each subatomic particle.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> “Effect of changing the quantity.”</p><p><span class="cue">Method:</span> Protons → element. Neutrons → mass. Electrons → charge.</p></div>
+    <div class="scroll"><table>
+      <thead><tr><th>Particle</th><th>Charge</th><th>Relative mass</th><th>Location</th><th>Effect of changing the quantity</th></tr></thead>
+      <tbody>
+        <tr><td>Proton</td><td>+1</td><td>1</td><td>Nucleus</td><td>Element changes. Mass and charge change too.</td></tr>
+        <tr><td>Neutron</td><td>0</td><td>1</td><td>Nucleus</td><td>Mass changes (a different isotope); element and charge don't.</td></tr>
+        <tr><td>Electron</td><td>−1</td><td>≈ 0 (about 1/1836)</td><td>Outside nucleus</td><td><b>Charge changes</b> (it becomes an ion); element doesn't, mass barely changes.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">The electron row on the handed-in copy says what doesn't change but leaves out the main effect: the charge changes. That's the whole point of electrons in this unit (Li → Li⁺, balloon becomes negative).</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Q6</span><span class="tag">Particle table</span></div>
+  <p>Complete the table of protons, neutrons, electrons, mass, and charge.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> A grid with blanks.</p><p><span class="cue">Method:</span> mass = p + n; charge = p − e.</p></div>
+    <div class="scroll"><table>
+      <thead><tr><th>Protons</th><th>Neutrons</th><th>Electrons</th><th>Mass</th><th>Charge</th><th>How</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>0</td><td>1</td><td class="fill">1</td><td class="fill">neutral</td><td>1 + 0 = 1; 1 − 1 = 0</td></tr>
+        <tr><td class="fill">6</td><td>6</td><td class="fill">6</td><td>12</td><td>neutral</td><td>12 − 6 = 6 protons; neutral → 6 electrons</td></tr>
+        <tr><td class="fill">8</td><td>8</td><td>10</td><td class="fill">16</td><td>−2</td><td>p − 10 = −2 → p = 8; 8 + 8 = 16</td></tr>
+        <tr><td>11</td><td class="fill">12</td><td class="fill">10</td><td>23</td><td>+1</td><td>23 − 11 = 12; 11 − e = +1 → e = 10</td></tr>
+        <tr><td>17</td><td>18</td><td>17</td><td class="fill">35</td><td class="fill">neutral</td><td>17 + 18 = 35; 17 − 17 = 0</td></tr>
+        <tr><td>10</td><td>11</td><td class="fill">10</td><td class="fill">21</td><td>neutral</td><td>neutral → 10 electrons; 10 + 11 = 21</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Row 4 on the handed-in copy has <b>2</b> neutrons. It should be <b>12</b> (23 − 11). Everything else on the table is right.</p>
+  </div></details>
+</div>
+</div>
+
+<div class="gpanel" id="panel-s-practice" role="tabpanel" aria-labelledby="tab-s-practice" tabindex="0" hidden>
+<h2>Practice test</h2>
+<p>New questions in the same style as the Quiz 2 review. Answer on paper, then check.</p>
+<div class="toolbar"><button type="button" class="ghost openAll">Show all solutions</button><button type="button" class="ghost closeAll">Hide all solutions</button></div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #1</span></div>
+  <p>Fill in the blanks.</p>
+  <div class="scroll"><table>
+    <thead><tr><th></th><th>Protons</th><th>Neutrons</th><th>Electrons</th><th>Mass</th><th>Charge</th></tr></thead>
+    <tbody>
+      <tr><td>a</td><td>13</td><td>14</td><td>10</td><td>?</td><td>?</td></tr>
+      <tr><td>b</td><td>?</td><td>16</td><td>18</td><td>32</td><td>?</td></tr>
+      <tr><td>c</td><td>19</td><td>?</td><td>?</td><td>39</td><td>+1</td></tr>
+      <tr><td>d</td><td>9</td><td>10</td><td>?</td><td>?</td><td>−1</td></tr>
+      <tr><td>e</td><td>?</td><td>20</td><td>20</td><td>40</td><td>?</td></tr>
+    </tbody>
+  </table></div>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Particle table. Same type as Q6.</p></div>
+    <p><b>a.</b> Mass 13 + 14 = <b>27</b>; charge 13 − 10 = <b>+3</b>.</p>
+    <p><b>b.</b> Protons 32 − 16 = <b>16</b>; charge 16 − 18 = <b>−2</b>.</p>
+    <p><b>c.</b> Neutrons 39 − 19 = <b>20</b>; electrons 19 − 1 = <b>18</b>.</p>
+    <p><b>d.</b> Electrons 9 + 1 = <b>10</b>; mass 9 + 10 = <b>19</b>.</p>
+    <p><b>e.</b> Protons 40 − 20 = <b>20</b>; charge 20 − 20 = <b>neutral</b>.</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #2</span></div>
+  <p>An atom gains two neutrons. Does it become a different element? Does its charge change? What does change?</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Effect of changing a particle. Same type as Q5.</p></div>
+    <div class="answer">Same element, same charge. Its mass goes up by 2, so it's a different isotope of the same element.</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #3</span></div>
+  <p>A sodium atom (11 protons) loses one electron. Name what changes and what stays the same.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Effect of changing a particle. Same type as Q5.</p></div>
+    <div class="answer">Charge changes from 0 to +1 (it's now Na⁺, an ion). Still sodium, because protons didn't change. Mass is essentially the same.</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #4</span></div>
+  <p>A plastic comb is pulled through dry hair and ends up negative. Explain at the particle level, and say what happens to the hair.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Charging by rubbing. Same type as Q2.</p></div>
+    <div class="answer">Electrons moved from the hair to the comb. The comb has extra electrons (−); the hair is missing the same number (+). Protons didn't move. The comb and hair attract, and the hair strands, all +, repel each other and spread out.</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #5</span></div>
+  <p>Sketch the electric field around a <b>negative</b> charge. Put a small positive test charge nearby and draw the force on it.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Field and force. Same type as Q3/Q4, with the sign flipped.</p></div>
+    <div class="answer">Field lines point inward, toward the − charge. The + test charge is pulled toward the − charge, so its force arrow points at the − charge.</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #6</span></div>
+  <p>Two balloons are both rubbed on the same sweater and hung side by side. Draw the forces on each balloon.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Charging by rubbing, then forces.</p></div>
+    <div class="answer">Both balloons took electrons from the sweater, so both are −. Like charges repel: each balloon gets a force arrow pointing away from the other.</div>
+  </div></details>
+</div>
+</div>
+</div>
+
+
+<div class="topic wrap" id="topic-iso" role="tabpanel" aria-labelledby="topictab-iso" hidden>
+<p class="lede">Every problem on this sheet uses one equation: the weighted average. What changes is which piece is missing. Spot the missing piece and the method follows.</p>
+
+<div class="subtabs" role="tablist" aria-label="Atomic mass sections">
+  <button type="button" role="tab" id="tab-i-check" aria-controls="panel-i-check" aria-selected="true">Checklist</button>
+  <button type="button" role="tab" id="tab-i-pat" aria-controls="panel-i-pat" aria-selected="false" tabindex="-1">Patterns</button>
+  <button type="button" role="tab" id="tab-i-solved" aria-controls="panel-i-solved" aria-selected="false" tabindex="-1">Solved problems</button>
+  <button type="button" role="tab" id="tab-i-practice" aria-controls="panel-i-practice" aria-selected="false" tabindex="-1">Practice test</button>
+</div>
+
+<div class="gpanel" id="panel-i-check" role="tabpanel" aria-labelledby="tab-i-check" tabindex="0">
+<h2>The checklist</h2>
+<div class="formula"><span>atomic mass = (mass₁ × fraction₁) + (mass₂ × fraction₂) + …</span><span class="fnote">fraction = percent ÷ 100, so 69.17% → 0.6917</span></div>
+<p>Run through these when you first look at a problem.</p>
+<ol class="check">
+  <li><b>What's missing?</b> All masses and percents given → find the atomic mass. The average and one mass given → find the other mass. Both masses and the average given → find the percents.</li>
+  <li><b>Change percents to decimals</b> (divide by 100). Or keep the percents and divide the whole sum by 100 at the end. Both give the same answer; just don't mix them.</li>
+  <li><b>Where does the average come from?</b> If the problem says “from the periodic table,” look it up and write it down before you start.</li>
+  <li><b>Two unknown percents?</b> Call one <i>x</i> and the other 100 − <i>x</i>, because they have to add to 100%.</li>
+  <li><b>Sanity check.</b> The atomic mass must land between the lightest and heaviest isotope, and closer to the most abundant one.</li>
+</ol>
+<p class="tip">Don't round early in the “missing mass” problems. Dividing by the leftover fraction blows small rounding errors up. Keep every digit until the last step.</p>
+</div>
+
+<div class="gpanel" id="panel-i-pat" role="tabpanel" aria-labelledby="tab-i-pat" tabindex="0" hidden>
+<h2>The four patterns</h2>
+
+<h3>1 · Which isotope is most common? (no math)</h3>
+<p><span class="cue">Cue:</span> Isotope names and the periodic-table mass, but no percents.</p>
+<p><span class="cue">Method:</span> <span class="mark">The average is pulled toward the most abundant isotope.</span> Whichever isotope's mass number is closest to the atomic mass is the most abundant.</p>
+<p class="where">Worked example: #1.</p>
+
+<h3>2 · Find the atomic mass (forward)</h3>
+<p><span class="cue">Cue:</span> Every isotope's mass and percent are given. The question says “calculate the atomic mass.”</p>
+<p><span class="cue">Method:</span> <span class="mark">Multiply each mass by its decimal abundance, then add.</span> Three or four isotopes just means more terms.</p>
+<div class="formula"><span>(12.000 × 0.9945) + (14.003 × 0.0055) = 11.934 + 0.077 = 12.011 amu</span></div>
+<p class="where">Worked examples: #2, #3, #4, #6.</p>
+
+<h3>3 · Find a missing isotope mass (backward)</h3>
+<p><span class="cue">Cue:</span> The question says “using the atomic mass on the periodic table, determine the mass of …”</p>
+<p><span class="cue">Method:</span> Write the forward equation with <i>m</i> where the missing mass goes. The missing percent is 100 minus the one you're given. Then undo the arithmetic: <span class="mark">subtract the known term, divide by the leftover fraction.</span></p>
+<div class="formula"><span>average = (m₁ × f₁) + (m × f₂)</span><span>m = (average − m₁ × f₁) ÷ f₂</span></div>
+<p class="where">Worked example: #5.</p>
+
+<h3>4 · Find the percents (two unknowns)</h3>
+<p><span class="cue">Cue:</span> Both masses are given, the percents aren't, and the question says “calculate the abundance of each.”</p>
+<p><span class="cue">Method:</span> <span class="mark">Let x be one percent and 100 − x the other</span>, put them in the forward equation, distribute, and solve for x. This is the same linear-equation algebra as clearing a denominator.</p>
+<div class="formula"><span>[m₁·x + m₂(100 − x)] ÷ 100 = average</span></div>
+<p class="where">Worked example: #7.</p>
+
+<div class="aside">
+  <h3>A note on the worksheet's carbon example</h3>
+  <p>The intro says carbon is mostly carbon-12 and carbon-14. Carbon's second stable isotope is actually <b>carbon-13</b> (mass 13.003, about 1.1%). Carbon-14 is radioactive and only exists in trace amounts; it's the one used in carbon dating. The worksheet's arithmetic still works (it gives 12.011), so the method is fine to learn from. Just don't memorize “carbon-14 is the second most common isotope,” because it isn't.</p>
+</div>
+</div>
+
+<div class="gpanel" id="panel-i-solved" role="tabpanel" aria-labelledby="tab-i-solved" tabindex="0" hidden>
+<h2>Solved problems</h2>
+<p>Isotopic Abundance practice problems. Try each one, then open the solution. Notes in red refer to what was written on the handed-in copy.</p>
+<div class="toolbar"><button type="button" class="ghost openAll">Show all solutions</button><button type="button" class="ghost closeAll">Hide all solutions</button></div>
+
+<div class="problem">
+  <div class="head"><span class="num">#1</span><span class="tag">Most common</span></div>
+  <p>Argon has three naturally occurring isotopes: argon-36, argon-38, and argon-40. Based on argon's reported atomic mass, which isotope is the most abundant? Explain.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> Isotope names, no percents.</p><p><span class="cue">Method:</span> Compare the periodic-table mass to each mass number.</p></div>
+    <p>Argon's atomic mass on the periodic table is 39.948 amu. That is almost exactly 40 and far from 36 or 38.</p>
+    <p>A weighted average sits closest to the isotope that makes up most of the sample, so argon-40 must be by far the most common.</p>
+    <div class="answer">Argon-40, because the average (39.95) is very close to 40.</div>
+    <p class="note">The handed-in answer has this right. For full credit, add the “why”: the average is pulled toward the most abundant isotope.</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">#2</span><span class="tag">Forward</span></div>
+  <p>Copper-63 is 69.17% abundant with a mass of 62.9296 amu. Copper-65 is 30.83% abundant with a mass of 64.9278 amu. Calculate the atomic mass of copper.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> Every mass and percent given.</p><p><span class="cue">Method:</span> Mass × decimal abundance for each, then add.</p></div>
+    <div class="calc">
+      <span>(62.9296 × 0.6917) + (64.9278 × 0.3083)</span>
+      <span>= 43.5284 + 20.0172</span>
+      <span>= 63.5456</span>
+    </div>
+    <p><b>Check:</b> 63.55 is between 63 and 65, and closer to 63, which is the more common isotope. ✓ It matches copper's periodic-table mass, 63.546.</p>
+    <div class="answer">63.55 amu</div>
+    <p class="note">On the handed-in copy, the work in #2's space is actually the bromine calculation from #5 (78.918 × 50.69 …). Copper itself wasn't calculated.</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">#3</span><span class="tag">Forward · 3 isotopes</span></div>
+  <p>Silicon's three isotopes: 27.9769 amu (92.2297%), 28.9765 amu (4.6832%), 29.9738 amu (3.0872%). Calculate the atomic mass of silicon.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> Every mass and percent given; just more terms.</p><p><span class="cue">Method:</span> Same as #2, with three products.</p></div>
+    <div class="calc">
+      <span>(27.9769 × 0.922297) + (28.9765 × 0.046832) + (29.9738 × 0.030872)</span>
+      <span>= 25.8030 + 1.3570 + 0.9254</span>
+      <span>= 28.0854</span>
+    </div>
+    <p><b>Check:</b> the percents add to 100.0001% (rounding), and 28.09 sits just above 28, where 92% of the atoms are. ✓</p>
+    <div class="answer">28.09 amu</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">#4</span><span class="tag">Forward</span></div>
+  <p>Gallium-69 has a mass of 68.9256 amu and is 60.108% abundant. Gallium-71 has a mass of 70.9247 amu and is 39.892% abundant. Calculate the atomic mass of gallium.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> Every mass and percent given.</p><p><span class="cue">Method:</span> Mass × decimal abundance, then add.</p></div>
+    <div class="calc">
+      <span>(68.9256 × 0.60108) + (70.9247 × 0.39892)</span>
+      <span>= 41.4298 + 28.2933</span>
+      <span>= 69.7231</span>
+    </div>
+    <p><b>Check:</b> between 69 and 71, a bit closer to 69 (the 60% isotope). ✓</p>
+    <div class="answer">69.72 amu</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">#5</span><span class="tag">Missing mass</span></div>
+  <p>Bromine-79 has a mass of 78.918 amu and is 50.69% abundant. Using the atomic mass on the periodic table, find the mass of bromine-81.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> “Using the atomic mass on the periodic table, determine the mass of …”</p><p><span class="cue">Method:</span> Forward equation with <i>m</i> for the unknown, subtract the known term, divide by the leftover fraction.</p></div>
+    <p><b>Gather.</b> Periodic table: Br = 79.904 amu. Bromine-81's percent = 100 − 50.69 = 49.31%.</p>
+    <div class="calc">
+      <span>79.904 = (78.918 × 0.5069) + (m × 0.4931)</span>
+      <span>79.904 = 40.0035 + 0.4931m</span>
+      <span>39.9005 = 0.4931m</span>
+      <span>m = 39.9005 ÷ 0.4931 = 80.918</span>
+    </div>
+    <p><b>Check:</b> put it back in: 40.0035 + (80.918 × 0.4931) = 79.904. ✓ And it's a little under 81, as an isotope mass should be.</p>
+    <div class="answer">80.918 amu (with 79.904 from the periodic table)</div>
+    <p class="note">The handed-in work (written in #2's space) set this up correctly and got 80.909. The only difference is it used 79.90 instead of 79.904. Dividing by 0.4931 roughly doubles that 0.004 gap, which is why the answers differ in the hundredths place. Use every digit your periodic table gives.</p>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">#6</span><span class="tag">Forward · 4 isotopes</span></div>
+  <p>Lead's four isotopes: 203.973 amu (1.4%), 205.974 amu (24.1%), 206.976 amu (22.1%), 207.977 amu (52.4%). Calculate the atomic mass of lead.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> Every mass and percent given.</p><p><span class="cue">Method:</span> Four products, then add.</p></div>
+    <div class="calc">
+      <span>(203.973 × 0.014) + (205.974 × 0.241) + (206.976 × 0.221) + (207.977 × 0.524)</span>
+      <span>= 2.8556 + 49.6397 + 45.7417 + 108.9800</span>
+      <span>= 207.217</span>
+    </div>
+    <p><b>Check:</b> percents add to 100%, and 207.2 matches lead on the periodic table. ✓</p>
+    <div class="answer">207.22 amu</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">#7</span><span class="tag">Missing percents</span></div>
+  <p>Antimony-121 has a mass of 120.904 amu and antimony-123 has a mass of 122.904 amu. Using the periodic-table average, find the abundance of each isotope.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Cue:</span> Both masses, no percents, “abundance of each.”</p><p><span class="cue">Method:</span> x and 100 − x, then solve the linear equation.</p></div>
+    <p><b>Gather.</b> Periodic table: Sb = 121.76 amu. Let x = % of antimony-121, so 100 − x = % of antimony-123.</p>
+    <div class="calc">
+      <span>[120.904x + 122.904(100 − x)] ÷ 100 = 121.76</span>
+      <span>120.904x + 12290.4 − 122.904x = 12176   <i>(× 100, distribute)</i></span>
+      <span>−2x + 12290.4 = 12176</span>
+      <span>−2x = −114.4</span>
+      <span>x = 57.2</span>
+    </div>
+    <p>So antimony-123 = 100 − 57.2 = 42.8%.</p>
+    <p><b>Check:</b> (120.904 × 0.572) + (122.904 × 0.428) = 69.157 + 52.603 = 121.76. ✓ Antimony-121 is lighter and more common, so the average sits below the midpoint (121.904). ✓</p>
+    <div class="answer">Antimony-121: 57.2% · Antimony-123: 42.8%</div>
+    <p class="note">The handed-in work on the back page does exactly this and gets both answers right. It's worth writing which isotope x stands for, so the two answers don't get swapped.</p>
+  </div></details>
+</div>
+
+<h2>Answer key</h2>
+<div class="scroll"><table class="akey">
+  <thead><tr><th>#</th><th>Answer</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Argon-40 (average 39.95 is closest to 40)</td></tr>
+    <tr><td>2</td><td>63.55 amu</td></tr>
+    <tr><td>3</td><td>28.09 amu</td></tr>
+    <tr><td>4</td><td>69.72 amu</td></tr>
+    <tr><td>5</td><td>80.918 amu</td></tr>
+    <tr><td>6</td><td>207.22 amu</td></tr>
+    <tr><td>7</td><td>Sb-121 57.2%, Sb-123 42.8%</td></tr>
+  </tbody>
+</table></div>
+</div>
+
+<div class="gpanel" id="panel-i-practice" role="tabpanel" aria-labelledby="tab-i-practice" tabindex="0" hidden>
+<h2>Practice test</h2>
+<p>Eight new problems covering the same four patterns, mixed up. Isotope data are real values, rounded. Work each on paper first; nothing here tells you which pattern a problem is.</p>
+<div class="toolbar"><button type="button" class="ghost openAll">Show all solutions</button><button type="button" class="ghost closeAll">Hide all solutions</button></div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #1</span></div>
+  <p>Chlorine-35 has a mass of 34.969 amu and is 75.78% abundant. Chlorine's atomic mass is 35.453 amu. Find the mass of chlorine-37.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Missing mass. Same type as #5.</p></div>
+    <div class="calc">
+      <span>Chlorine-37 % = 100 − 75.78 = 24.22%</span>
+      <span>35.453 = (34.969 × 0.7578) + 0.2422m</span>
+      <span>35.453 = 26.4995 + 0.2422m</span>
+      <span>m = 8.9535 ÷ 0.2422 = 36.967</span>
+    </div>
+    <div class="answer">36.967 amu</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #2</span></div>
+  <p>Boron-10 (10.0129 amu) is 19.9% abundant and boron-11 (11.0093 amu) is 80.1% abundant. Calculate boron's atomic mass.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Forward. Same type as #2.</p></div>
+    <div class="calc">
+      <span>(10.0129 × 0.199) + (11.0093 × 0.801)</span>
+      <span>= 1.9926 + 8.8184 = 10.811</span>
+    </div>
+    <div class="answer">10.81 amu</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #3</span></div>
+  <p>Chlorine's two isotopes are chlorine-35 and chlorine-37. Its atomic mass is 35.45 amu. Which is more abundant? Explain.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Most common. Same type as #1.</p></div>
+    <p>35.45 is much closer to 35 than to 37, so the average is being pulled toward chlorine-35. (It's about 76%, as Practice #1 shows.)</p>
+    <div class="answer">Chlorine-35</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #4</span></div>
+  <p>Silver-107 has a mass of 106.905 amu and silver-109 has a mass of 108.905 amu. Silver's atomic mass is 107.868 amu. Find the abundance of each.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Missing percents. Same type as #7.</p></div>
+    <div class="calc">
+      <span>Let x = % silver-107, 100 − x = % silver-109</span>
+      <span>106.905x + 108.905(100 − x) = 10786.8</span>
+      <span>106.905x + 10890.5 − 108.905x = 10786.8</span>
+      <span>−2x = −103.7</span>
+      <span>x = 51.85</span>
+    </div>
+    <div class="answer">Silver-107: 51.85% · Silver-109: 48.15%</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #5</span></div>
+  <p>Magnesium's three isotopes: 23.9850 amu (78.99%), 24.9858 amu (10.00%), 25.9826 amu (11.01%). Calculate magnesium's atomic mass.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Forward, three isotopes. Same type as #3.</p></div>
+    <div class="calc">
+      <span>(23.9850 × 0.7899) + (24.9858 × 0.1000) + (25.9826 × 0.1101)</span>
+      <span>= 18.9458 + 2.4986 + 2.8607 = 24.305</span>
+    </div>
+    <div class="answer">24.31 amu</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #6</span></div>
+  <p>Rubidium-85 has a mass of 84.912 amu and rubidium-87 has a mass of 86.909 amu. Rubidium's atomic mass is 85.468 amu. Find the abundance of each.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Missing percents. Same type as #7, but the masses differ by 1.997, not exactly 2.</p></div>
+    <div class="calc">
+      <span>84.912x + 86.909(100 − x) = 8546.8</span>
+      <span>84.912x + 8690.9 − 86.909x = 8546.8</span>
+      <span>−1.997x = −144.1</span>
+      <span>x = 72.16</span>
+    </div>
+    <div class="answer">Rubidium-85: 72.16% · Rubidium-87: 27.84%</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #7</span></div>
+  <p>Lithium-6 (6.0151 amu) is 7.59% abundant and lithium-7 (7.0160 amu) is 92.41% abundant. Calculate lithium's atomic mass.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Forward. Same type as #4.</p></div>
+    <div class="calc">
+      <span>(6.0151 × 0.0759) + (7.0160 × 0.9241)</span>
+      <span>= 0.4565 + 6.4835 = 6.940</span>
+    </div>
+    <div class="answer">6.94 amu</div>
+  </div></details>
+</div>
+
+<div class="problem">
+  <div class="head"><span class="num">Practice #8</span></div>
+  <p>Neon's three isotopes: 19.9924 amu (90.48%), 20.9938 amu (0.27%), 21.9914 amu (9.25%). Calculate neon's atomic mass.</p>
+  <details><summary>Solution</summary><div class="steps">
+    <div class="pattern"><p><span class="cue">Pattern:</span> Forward, three isotopes. Same type as #3.</p></div>
+    <div class="calc">
+      <span>(19.9924 × 0.9048) + (20.9938 × 0.0027) + (21.9914 × 0.0925)</span>
+      <span>= 18.0891 + 0.0567 + 2.0342 = 20.180</span>
+    </div>
+    <div class="answer">20.18 amu</div>
+  </div></details>
+</div>
+
+<h2>Answers only</h2>
+<div class="scroll"><table class="akey">
+  <thead><tr><th>#</th><th>Answer</th><th>Pattern</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>36.967 amu</td><td>Missing mass</td></tr>
+    <tr><td>2</td><td>10.81 amu</td><td>Forward</td></tr>
+    <tr><td>3</td><td>Chlorine-35</td><td>Most common</td></tr>
+    <tr><td>4</td><td>51.85% / 48.15%</td><td>Missing percents</td></tr>
+    <tr><td>5</td><td>24.31 amu</td><td>Forward</td></tr>
+    <tr><td>6</td><td>72.16% / 27.84%</td><td>Missing percents</td></tr>
+    <tr><td>7</td><td>6.94 amu</td><td>Forward</td></tr>
+    <tr><td>8</td><td>20.18 amu</td><td>Forward</td></tr>
+  </tbody>
+</table></div>
+</div>
+</div>
+
 
 <footer class="wrap">
-  When you write an explanation, aim for three parts: what you observed, what happened to the electrons, and which rule of charge explains the result.
+  When you write an explanation, aim for three parts: what you observed, what happened to the electrons, and which rule of charge explains the result. Every numeric answer in the guide was recalculated by script; notes in red point out where the handed-in work differs.
 </footer>
 
 <script>
@@ -491,6 +1147,31 @@ footer{padding:40px 0 60px;color:var(--muted);font-size:.95rem;border-top:1px so
     tabs.appendChild(b);
   });
   showModel(0);
+})();
+</script>
+
+<script>
+(function(){
+  function wire(tabs){
+    function select(tab,focus){
+      tabs.forEach(function(t){var on=t===tab;t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
+      if(focus)tab.focus();
+      window.scrollTo({top:0});
+    }
+    tabs.forEach(function(tab,i){
+      tab.addEventListener('click',function(){select(tab,false);});
+      tab.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){e.preventDefault();select(tabs[(i+d+tabs.length)%tabs.length],true);}});
+    });
+  }
+  var list=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+  wire(list('.topics [role="tab"]'));
+  list('.subtabs').forEach(function(b){wire(list('[role="tab"]',b));});
+  list('.toolbar').forEach(function(bar){
+    var scope=bar.closest('.gpanel')||document;
+    var all=function(){return list('.problem details',scope);};
+    bar.querySelector('.openAll').addEventListener('click',function(){all().forEach(function(d){d.open=true;});});
+    bar.querySelector('.closeAll').addEventListener('click',function(){all().forEach(function(d){d.open=false;});});
+  });
 })();
 </script>
 </body>

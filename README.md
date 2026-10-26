@@ -1,12 +1,33 @@
 # Chemistry study guide
 
-A single-page, interactive study guide on ions, electron transfer, and static
-electricity, written at a 10th-grade chemistry level. It explains the ideas
-behind the unit's questions without answering them.
+A single-page, interactive study guide for 10th-grade chemistry. Like the
+[algebra guide](https://wm.github.io/algebra-two/), each topic is split into a
+**Checklist**, **Patterns** (the cue that tells you which method applies),
+**Solved problems** from class worksheets, and a **Practice test** with new
+numbers.
 
 **Live site:** <https://wm.github.io/chemistry/>
 
-## Contents
+## Topics
+
+- **Static electricity** — the original interactive guide (details below).
+- **Subatomic particles & fields** — built from *Quiz 2 Review: Subatomic
+  Particles and Electric Fields*: labeling an atom, charging by rubbing,
+  drawing electric / gravitational / magnetic fields, forces on a test
+  particle, and particle tables (mass = p + n, charge = p − e).
+- **Isotopes & atomic mass** — built from *Isotopic Abundance practice
+  problems*: weighted averages, missing isotope mass, and missing abundances
+  (x and 100 − x).
+
+### Notes on the worksheets
+
+- The isotope sheet's intro names carbon's second isotope as carbon-14 (14.003,
+  0.55%). Carbon's second stable isotope is carbon-13 (13.003, ~1.1%); the
+  sheet's arithmetic still gives 12.011, so the method is unaffected.
+- Isotope #5 depends on how many digits of bromine's atomic mass you use:
+  79.904 gives 80.918 amu; 79.90 gives 80.909 amu.
+
+## Static electricity contents
 
 - **Lithium atom builder** — add or remove an electron to see Li, Li⁺, and Li⁻.
   Proton and neutron counts stay fixed; only the net charge changes.
